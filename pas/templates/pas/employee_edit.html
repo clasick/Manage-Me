@@ -1,0 +1,18 @@
+<center>
+<h1><font size="50px">Sales Order System</font></h1>
+<hr>
+<p><a href = "/test/">Employee List</a> | <a href = "/test/employee/add/">Add New Employee</a></p> 
+<hr>
+<body>
+<h2>Edit Employee: </h2>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+        {{ form.as_p }}
+        </table>
+        <input type="submit" value="Submit" />
+    </form>
+
+</body>
+</center>

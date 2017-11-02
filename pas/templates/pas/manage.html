@@ -1,0 +1,97 @@
+{% extends 'pas/base.html' %}
+
+{% block content %}
+<div class="container" style="padding-bottom:15px"> 
+<ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <a class="nav-link active" href="/manage">Manage</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/project/add">Add Project</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/team/add">Add Team</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/employee/add">Add Employee</a>
+    </li>
+  </ul>
+</div>
+    <h2>Teams</h2>    
+<FORM action="..." method="post"></FORM>
+<table class="table">
+   <tr>
+    <!-- <th>Edit</th> -->
+    <th>No.</th>
+    <th>Name</th>
+    <th>Budget</th>
+    <th>Start Date</th>
+    <th>Progress</th>
+  </tr>
+ {% for team in all_team_list %}
+  <tr>
+    <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
+    <th>{{ team.id }}</th>
+    <th>{{ team.team_name }}</th>    
+    <th>{{ team.budget }}</th>
+    <th>{{ team.start_date }}</th>
+    <th>{{ team.progress }}</th>
+  </tr>
+{% endfor %}
+</table> 
+<!-- <hr> -->
+<!-- <input type="submit" value="Edit"> -->
+<hr>
+
+<h2>Projects</h2>
+<FORM action="..." method="post"></FORM>
+<table class="table">
+   <tr>
+    <!-- <th>Edit</th> -->
+    <th>No.</th>
+    <th>Project Name</th>
+    <th>Duration</th>
+  </tr>
+ {% for project in all_project_list %}
+  <tr>
+    <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
+    <th>{{ project.id }}</th>
+    <th>{{ project.project_name }}</th>
+    <th>{{ project.duration }}</th>
+  </tr>
+{% endfor %}
+</table> 
+<!-- <hr> -->
+<!-- <input type="submit" value="Edit"> -->
+<hr>
+
+<h2>Members</h2>
+<FORM action="..." method="post"></FORM>
+<table class="table">
+   <tr>
+    <!-- <th>Edit</th> -->
+    <th>No.</th>
+    <!-- <th>Team Name</th> -->
+    <th>Employee Name</th>
+    <th>Phone no.</th>
+    <th>Designation</th>
+    <th>Join Date</th>
+  </tr>
+ {% for employee in all_employee_list %}
+  <tr>
+    <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
+    <th>{{ employee.id }}</th>
+    <!-- <th>{{ employee.team_name }}</th>     -->
+    <th>{{ employee.employee_name }}</th>    
+    <th>{{ employee.phone_no }}</th>
+    <th>{{ employee.designation }}</th>
+    <th>{{ employee.join_date }}</th>
+
+  </tr>
+{% endfor %}
+</table> 
+<!-- <hr> -->
+<!-- <input type="submit" value="Edit"> -->
+<hr>
+
+{% endblock %}
