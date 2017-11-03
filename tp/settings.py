@@ -25,7 +25,7 @@ SECRET_KEY = 'zpno-w&6%^21kj(kp=-$tk-w5px(i!c&tci+^4&htnv7r4$@o)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.43.140', '0.0.0.0', '127.0.0.1', 'localhost']
 
 
 # Application definition

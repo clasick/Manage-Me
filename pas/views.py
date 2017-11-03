@@ -26,22 +26,22 @@ def index(request):
 def about(request):
 	return render(request, 'pas/about.html')
 
+def dashboard(request):
+	all_team_list = Team.objects.all()
+	context = {'all_team_list': all_team_list}
+	return render(request, 'pas/dashboard.html', context)
+
 def manage(request):
 	all_team_list = Team.objects.all()
-	all_employee_list = Employee.objects.all()
-	all_project_list = Project.objects.all()
-	number1 = len(all_team_list)
-	number2 = len(all_employee_list)
-	number3 = len(all_project_list)
-	context = {'all_team_list': all_team_list, 'all_employee_list': all_employee_list, 'all_project_list': all_project_list, 'number1' : number1, 'number2' : number2, 'number3':number3}
+	context = {'all_team_list': all_team_list}
 	return render(request, 'pas/manage.html', context)
 
 def team_add(request):
 	if request.method == "POST":
 		form = AddTeamForm(request.POST)
 		if form.is_valid():
-			employee = form.save()
-			return redirect('pas:manage')
+			team = form.save()
+			return redirect('pas:dashboard')
 	else:
 		form = AddTeamForm()
 	return render(request, 'pas/team_add.html', {'form': form})
@@ -51,8 +51,8 @@ def project_add(request):
 	if request.method == "POST":
 		form = AddProjectForm(request.POST)
 		if form.is_valid():
-			employee = form.save()
-			return redirect('pas:manage')
+			project = form.save()
+			return redirect('pas:team_details', project.team_id)
 	else:
 		form = AddProjectForm()
 	return render(request, 'pas/project_add.html', {'form': form})
@@ -62,7 +62,7 @@ def employee_add(request):
 		form = AddEmployeeForm(request.POST)
 		if form.is_valid():
 			employee = form.save()
-			return redirect('pas:manage')
+			return redirect('pas:team_details', employee.team_id)
 	else:
 		form = AddEmployeeForm()
 	return render(request, 'pas/employee_add.html', {'form': form})
@@ -73,7 +73,7 @@ def employee_edit(request, employee_id):
 		form = AddEmployeeForm(request.POST, instance=employee)
 		if form.is_valid():
 			employee = form.save()
-			return redirect('pas:manage')
+			return redirect('pas:team_details', employee.team_id)
 	else:
 		form = AddEmployeeForm(instance=employee)
 	return render(request, 'pas/employee_edit.html', {'form': form})
@@ -84,7 +84,7 @@ def project_edit(request, project_id):
 		form = AddProjectForm(request.POST, instance=project)
 		if form.is_valid():
 			project = form.save()
-			return redirect('pas:manage')
+			return redirect('pas:team_details', project.team_id)
 	else:
 		form = AddProjectForm(instance=project)
 	return render(request, 'pas/project_edit.html', {'form': form})
@@ -95,19 +95,28 @@ def team_edit(request, team_id):
 		form = AddTeamForm(request.POST, instance=team)
 		if form.is_valid():
 			team = form.save()
-			return redirect('pas:manage')
+			return redirect('pas:team_details', team.team_id)
 	else:
 		form = AddTeamForm(instance=team)
 	return render(request, 'pas/team_edit.html', {'form': form})
 
 def team_delete(request, team_id):
-   Team.objects.get(pk=team_id).delete()
-   return redirect('pas:manage')
+    Team.objects.get(pk=team_id).delete()
+    return redirect('pas:manage')
 
 def employee_delete(request, employee_id):
-   employee.objects.get(pk=employee_id).delete()
-   return redirect('pas:manage')
+	e = Employee.objects.get(pk=employee_id)
+	team_id = e.team_id
+	e.delete()
+	return redirect('pas:team_details', team_id)
 
 def project_delete(request, project_id):
-   project.objects.get(pk=project_id).delete()
-   return redirect('pas:manage')
+    p = Project.objects.get(pk=project_id)
+    team_id = p.team_id
+    p.delete()
+    return redirect('pas:team_details', team_id)
+
+def team_details(request, team_id):
+	team = get_object_or_404(Team, pk=team_id)
+	context = {'team' : team}
+	return render(request, 'pas/team_details.html', context)

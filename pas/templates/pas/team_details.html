@@ -1,0 +1,110 @@
+{% extends 'pas/base.html' %}
+
+{% block content %}
+<div class="container" style="padding-bottom:15px"> 
+<ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <a class="nav-link" href="/dashboard">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/manage">Manage Teams</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Schedule Reviews</a>
+    </li>
+  </ul>
+</div>
+    <h2 class='bd-title' id='content'>{{ team.team_name }}     <div style = "float: right">
+            <a href="/team/{{ team.id }}/edit/" class="btn btn-secondary" >Edit Details</a>
+            <a href="/team/{{ team.id }}/delete/" class="btn btn-danger">Delete Team</a>
+            </div> </h2>
+            
+
+    <div class="card">
+            <div class="card-header">
+                    
+   Project Details 
+      </div>
+        <div class="card-body">
+               
+           {% if team.project_set.all.0 %}
+           <h4 class="card-title"> {{ team.project_set.all.0.project_name }}</h4>
+           <div class="progress">
+           <div class="progress-bar" role="progressbar" style="width: {{ team.project_set.all.0.percent }}%;" aria-valuenow="{{ team.project_set.all.0.percent }}" aria-valuemin="0" aria-valuemax="100">{{ team.project_set.all.0.percent }}%</div>
+          </div>
+         <p class="card-text">
+         </br>
+             Started: {{ team.project_set.all.0.start_date }}
+         </br>
+             Deadline: {{ team.project_set.all.0.deadline }}
+       </br>
+             Budget: ₹ {{ team.budget }} 
+   </br>
+
+   </br>
+           Comments: {{ team.project_set.all.0.comments }}
+       
+       </p>
+       <div style="float:right;">
+         <a href="/project/{{ team.project_set.all.0.id }}/edit/" class="btn btn-secondary">Edit Details</a>
+         <a href="/project/{{ team.project_set.all.0.id }}/delete/" class="btn btn-danger">Delete Project</a>          
+
+       </div>
+     </div>
+      {% else %}
+      <h4 class="card-title">No active project.</h4>
+      <div>
+            <a href="/project/add/" class="btn btn-primary">Add Project</a>
+   
+          </div>
+    </div>
+
+    {% endif %}
+      
+
+    
+    </br>
+      <div class="card">
+          <div class="card-header">
+              Team Members
+
+              <a href="/employee/add" class="btn btn-primary" style="float:right;">Add Member</a>
+              
+
+          </div>
+
+
+            <div class="card-body">
+                    <div class="row">
+                        
+                            {% for employee in team.employee_set.all %}
+                            
+                            <div class="col-sm-4 mb-3">
+                                    <div class="card">
+                                      <div class="card-body">
+                                        <h4 class="card-title">{{ employee.employee_name }}</h4>
+                                        <h6 class="card-subtitle mb-2 text-muted>">{{ employee.designation }}</h6>
+                                        <hr>    
+                                        <p class="card-text">Phone: {{ employee.phone_no }} 
+                                        </br>
+                                        Join Date: {{ employee.join_date }}
+                                        </p>
+                            
+                                        <div style = "float: right">
+                                        <a href="/employee/{{ employee.id }}/edit/" class="btn btn-secondary" >Edit Details</a>
+                                        <a href="/employee/{{ employee.id }}/delete/" class="btn btn-danger">Remove</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                  </div>
+
+                      
+                        {% endfor %}
+                    </div>
+                        
+            </div>
+
+          </div>
+
+
+{% endblock %}

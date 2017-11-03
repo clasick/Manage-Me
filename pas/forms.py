@@ -9,8 +9,7 @@ class AddTeamForm(forms.ModelForm):
 		fields = "__all__" 
 	team_name = models.CharField(max_length=20,default='ANON')
 	budget = models.IntegerField(default=0)
-	start_date = models.DateField()
-	progress = models.CharField(max_length=2000)
+
 	
 
 class AddProjectForm(forms.ModelForm):
@@ -19,7 +18,11 @@ class AddProjectForm(forms.ModelForm):
 		fields = "__all__" 
 	project_name = models.CharField(max_length=200)
 	duration = models.CharField(max_length=20)
-
+	start_date = models.DateField()
+	percent = models.IntegerField(default=0)
+	deadline = models.DateField()
+	comments = models.CharField(max_length=2000)
+	
 class AddEmployeeForm(forms.ModelForm):
 	class Meta:
 		model = Employee

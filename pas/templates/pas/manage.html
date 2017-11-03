@@ -4,98 +4,54 @@
 <div class="container" style="padding-bottom:15px"> 
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-      <a class="nav-link active" href="/manage">Manage</a>
+      <a class="nav-link" href="/dashboard">Dashboard</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/project/add">Add Project</a>
+      <a class="nav-link active" href="/manage">Manage Teams</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/team/add">Add Team</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/employee/add">Add Employee</a>
+      <a class="nav-link disabled" href="#">Schedule Reviews</a>
     </li>
   </ul>
 </div>
-    <h2>Teams</h2>    
+    <h2>Teams     <a href="/team/add/"><button type="button" class="btn btn-primary" style="float:right;">Add Team</button></a>  </h2>    
 <FORM action="..." method="post"></FORM>
 <table class="table">
    <tr>
     <!-- <th>Edit</th> -->
-    <th>No.</th>
-    <th>Name</th>
+    <th>Team Name</th>
+    <th>Assigned Project</th>
     <th>Budget</th>
-    <th>Start Date</th>
     <th>Progress</th>
-    <th>Update</th>
   </tr>
  {% for team in all_team_list %}
   <tr>
     <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
-    <th>{{ team.id }}</th>
     <th>{{ team.team_name }}</th>    
-    <th>{{ team.budget }}</th>
-    <th>{{ team.start_date }}</th>
-    <th>{{ team.progress }}</th>
-    <th><a href="/team/{{ team.id }}/edit/">Edit</a> / <a href='/team/{{ team.id }}/delete/'>Delete</a></th>
+    {% if team.project_set.all.0 %}
+    <th>{{ team.project_set.all.0.project_name }}</th>
+    {% else %}
+      <th>No active project</th>
+      {% endif %}
+    <th>₹ {{ team.budget }}</th>
+    <th>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: {{ team.project_set.all.0.percent }}%;" aria-valuenow="{{ team.project_set.all.0.percent }}" aria-valuemin="0" aria-valuemax="100">
+          {% if team.project_set.all.0 %}
+          
+        {{ team.project_set.all.0.percent }}%
+
+        {% endif %}
+      
+      </div>
+    </div>
+    </th>
+    <th><a href="/team/{{ team.id }}/details/"><button type="button" class="btn btn-secondary">Details</button></a></th>
   </tr>
 {% endfor %}
 </table> 
 <!-- <hr> -->
 <!-- <input type="submit" value="Edit"> -->
-<hr>
-
-<h2>Projects</h2>
-<FORM action="..." method="post"></FORM>
-<table class="table">
-   <tr>
-    <!-- <th>Edit</th> -->
-    <th>No.</th>
-    <th>Project Name</th>
-    <th>Duration</th>
-    <th>Update</th>
-  </tr>
- {% for project in all_project_list %}
-  <tr>
-    <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
-    <th>{{ project.id }}</th>
-    <th>{{ project.project_name }}</th>
-    <th>{{ project.duration }}</th>
-    <th><a href="/project/{{ project.id }}/edit/">Edit</a> / <a href='/project/{{ project.id }}/delete/'>Delete</a></th>    
-  </tr>
-{% endfor %}
-</table> 
-<!-- <hr> -->
-<!-- <input type="submit" value="Edit"> -->
-<hr>
-
-<h2>Members</h2>
-<FORM action="..." method="post"></FORM>
-<table class="table">
-   <tr>
-    <!-- <th>Edit</th> -->
-    <th>No.</th>
-    <!-- <th>Team Name</th> -->
-    <th>Employee Name</th>
-    <th>Phone no.</th>
-    <th>Designation</th>
-    <th>Join Date</th>
-    <th>Update</th>
-  </tr>
- {% for employee in all_employee_list %}
-  <tr>
-    <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
-    <th>{{ employee.id }}</th>
-    <!-- <th>{{ employee.team_name }}</th>     -->
-    <th>{{ employee.employee_name }}</th>    
-    <th>{{ employee.phone_no }}</th>
-    <th>{{ employee.designation }}</th>
-    <th>{{ employee.join_date }}</th>
-    <th><a href="/employee/{{ employee.id }}/edit/">Edit</a> / <a href='/employee/{{ employee.id }}/delete/'>Delete</a></th>
-
-  </tr>
-{% endfor %}
-</table> 
 <!-- <hr> -->
 <!-- <input type="submit" value="Edit"> -->
 <hr>
