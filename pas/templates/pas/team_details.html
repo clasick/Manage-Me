@@ -1,5 +1,7 @@
 {% extends 'pas/base.html' %}
 
+{% block title %}{{ team.team_name }}{% endblock %}
+
 {% block content %}
 <div class="container" style="padding-bottom:15px"> 
 <ul class="nav nav-pills nav-fill">
@@ -34,15 +36,16 @@
           </div>
          <p class="card-text">
          </br>
-             Started: {{ team.project_set.all.0.start_date }}
+             <b>Description</b>: <p> {{ team.project_set.all.0.description }} </p> 
+             <b>Started</b>: {{ team.project_set.all.0.start_date }}
          </br>
-             Deadline: {{ team.project_set.all.0.deadline }}
+             <b>Deadline</b>: {{ team.project_set.all.0.deadline }}
        </br>
-             Budget: ₹ {{ team.budget }} 
+             <b>Budget</b>: ₹ {{ team.budget }} 
    </br>
 
    </br>
-           Comments: {{ team.project_set.all.0.comments }}
+          <b>Comments</b>: {{ team.project_set.all.0.comments }}
        
        </p>
        <div style="float:right;">
@@ -54,7 +57,7 @@
       {% else %}
       <h4 class="card-title">No active project.</h4>
       <div>
-            <a href="/project/add/" class="btn btn-primary">Add Project</a>
+            <a href="/team/{{ team.id }}/project/add/" class="btn btn-primary">Add Project</a>
    
           </div>
     </div>
@@ -68,7 +71,7 @@
           <div class="card-header">
               Team Members
 
-              <a href="/employee/add" class="btn btn-primary" style="float:right;">Add Member</a>
+              <a href="/team/{{ team.id }}/employee/add/" class="btn btn-primary" style="float:right;">Add Member</a>
               
 
           </div>
@@ -76,14 +79,16 @@
 
             <div class="card-body">
                     <div class="row">
-                        
                             {% for employee in team.employee_set.all %}
-                            
                             <div class="col-sm-4 mb-3">
                                     <div class="card">
                                       <div class="card-body">
                                         <h4 class="card-title">{{ employee.employee_name }}</h4>
-                                        <h6 class="card-subtitle mb-2 text-muted>">{{ employee.designation }}</h6>
+                                        <h6 class="card-subtitle mb-2 text-muted>">
+                                          {% if employee.leader %}
+                                            <b>Leader</b> - 
+                                          {% endif %}
+                                          {{ employee.designation }}</h6>
                                         <hr>    
                                         <p class="card-text">Phone: {{ employee.phone_no }} 
                                         </br>
@@ -97,14 +102,8 @@
                                     </div>
                                     </div>
                                   </div>
-
-                      
                         {% endfor %}
-                    </div>
-                        
+                    </div>      
             </div>
-
           </div>
-
-
 {% endblock %}

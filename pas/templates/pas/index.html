@@ -1,13 +1,34 @@
 {% extends 'pas/base.html' %}
 
+{% block title %}Welcome{% endblock %}
+
 {% block content %}
+
+
+
+<script>
+    $(document).ready(function() {
+      $("#myModal").modal();
+    });
+  </script>
+
+
 <div class="jumbotron">
   <h1 class="display-3">Your Projects, Our Priority.</h1>
   <p class="lead">A simple tool to help you easily keep track of team projects in your organisation.</p>
   <hr class="my-4">
   <p>Create teams, add members, assign roles, schedule team reviews and more!</p>
   <p class="lead">
-    <a class="btn btn-primary btn-lg" href="/dashboard" role="button">Get Started</a>
+     <a href="/login"><button type="button" class="btn btn-primary btn-lg">Get Started</button></a>
+      
+      
   </p>
 </div>
+
+
+
+  
 {% endblock %}
+
+
+

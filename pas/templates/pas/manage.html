@@ -1,5 +1,8 @@
 {% extends 'pas/base.html' %}
 
+{% block title %}Manage Teams{% endblock %}
+
+
 {% block content %}
 <div class="container" style="padding-bottom:15px"> 
 <ul class="nav nav-pills nav-fill">
@@ -14,7 +17,11 @@
     </li>
   </ul>
 </div>
-    <h2>Teams     <a href="/team/add/"><button type="button" class="btn btn-primary" style="float:right;">Add Team</button></a>  </h2>    
+    <h2>Teams    
+      <div style = "float:right;">
+          <a href="/manage/"><button type="button" class="btn btn-secondary" style="margin-right:0px">Show All</button></a> <a href="/manage/hide-finished"><button type="button" class="btn btn-secondary" style="margin-right:10px">Hide Finished</button></a><a href="/manage/show-overdue"><button type="button" class="btn btn-secondary">Show Overdue</button></a>  <a href="/team/add/"><button type="button" class="btn btn-primary" >Add Team</button></a>  
+        </div>
+    </h2>    
 <FORM action="..." method="post"></FORM>
 <table class="table">
    <tr>
