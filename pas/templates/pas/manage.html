@@ -27,6 +27,7 @@
     <th>Budget</th>
     <th>Start Date</th>
     <th>Progress</th>
+    <th>Update</th>
   </tr>
  {% for team in all_team_list %}
   <tr>
@@ -36,6 +37,7 @@
     <th>{{ team.budget }}</th>
     <th>{{ team.start_date }}</th>
     <th>{{ team.progress }}</th>
+    <th><a href="/team/{{ team.id }}/edit/">Edit</a> / <a href='/team/{{ team.id }}/delete/'>Delete</a></th>
   </tr>
 {% endfor %}
 </table> 
@@ -51,6 +53,7 @@
     <th>No.</th>
     <th>Project Name</th>
     <th>Duration</th>
+    <th>Update</th>
   </tr>
  {% for project in all_project_list %}
   <tr>
@@ -58,6 +61,7 @@
     <th>{{ project.id }}</th>
     <th>{{ project.project_name }}</th>
     <th>{{ project.duration }}</th>
+    <th><a href="/project/{{ project.id }}/edit/">Edit</a> / <a href='/project/{{ project.id }}/delete/'>Delete</a></th>    
   </tr>
 {% endfor %}
 </table> 
@@ -76,6 +80,7 @@
     <th>Phone no.</th>
     <th>Designation</th>
     <th>Join Date</th>
+    <th>Update</th>
   </tr>
  {% for employee in all_employee_list %}
   <tr>
@@ -86,6 +91,7 @@
     <th>{{ employee.phone_no }}</th>
     <th>{{ employee.designation }}</th>
     <th>{{ employee.join_date }}</th>
+    <th><a href="/employee/{{ employee.id }}/edit/">Edit</a> / <a href='/employee/{{ employee.id }}/delete/'>Delete</a></th>
 
   </tr>
 {% endfor %}
