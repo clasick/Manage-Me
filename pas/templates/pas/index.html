@@ -4,14 +4,15 @@
 
 {% block content %}
 
+{% if login_error %}
+<div class="alert alert-danger">
+  <strong>Error!</strong> {{ login_error }}
+</div>{% endif %}
 
-
-<script>
-    $(document).ready(function() {
-      $("#myModal").modal();
-    });
-  </script>
-
+{% if loggedout %}
+<div class="alert alert-success">
+  <strong>Success!</strong> {{ loggedout }}
+</div>{% endif %}
 
 <div class="jumbotron">
   <h1 class="display-3">Your Projects, Our Priority.</h1>

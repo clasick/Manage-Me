@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^team/(?P<team_id>\d+)/delete/$', views.team_delete, name='team_delete'),
     url(r'^employee/(?P<employee_id>\d+)/delete/$', views.employee_delete, name='employee_delete'),
     url(r'^project/(?P<project_id>\d+)/delete/$', views.project_delete, name='project_delete'),
-    url(r'^team/(?P<team_id>\d+)/details/$', views.team_details, name='team_details')
+    url(r'^team/(?P<team_id>\d+)/details/$', views.team_details, name='team_details'),
+    url(r'^logout/$', views.user_logout, name='logout')
 ]

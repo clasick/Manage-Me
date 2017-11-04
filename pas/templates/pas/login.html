@@ -6,16 +6,23 @@
 
 
 <div class="card">
-
     <div class="card-header">
         Login
       </div>
-  <div class="card-body" style="margin-left:20em;">
-      <form method="post">
+  <div class="card-body">
+        {% if not request.user.is_authenticated %}
+
+      <form method="post" style="margin-left:20em;">
           {% csrf_token %}
           {{ form.as_p }}
           <button type="submit">Login</button>
-        </form>  </div>
+        </form>  
+        {% else %}
+<div class="alert alert-danger">
+        <strong>Error!</strong> You are already logged in!
+      </div>
+        {% endif %}
+    </div>
 </div>
  
 {% endblock %}
