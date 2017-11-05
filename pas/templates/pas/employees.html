@@ -1,0 +1,59 @@
+{% extends 'pas/base.html' %}
+
+{% block title %}Manage Teams{% endblock %}
+
+
+{% block content %}
+<div class="container" style="padding-bottom:15px"> 
+<ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <a class="nav-link" href="/dashboard">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/manage">Manage Teams</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/employees">Manage Employees</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Schedule Reviews</a>
+    </li>
+  </ul>
+</div>
+
+
+
+    <h2>Employees    
+      <div style = "float:right;">
+          <a href="/manage/"><button type="button" class="btn btn-secondary" style="margin-right:0px">Show All</button></a> <a href="/manage/hide-finished"><button type="button" class="btn btn-secondary" style="margin-right:10px">Hide Finished</button></a><a href="/manage/show-overdue"><button type="button" class="btn btn-secondary">Show Overdue</button></a>  <a href="/employee/add"><button type="button" class="btn btn-primary" >Add Employee</button></a>  
+        </div>
+    </h2>    
+<FORM action="..." method="post"></FORM>
+<table class="table">
+   <tr>
+    <!-- <th>Edit</th> -->
+    <th>Name</th>
+    <th>Phone No.</th>
+    <th>Designation</th>
+    <th>Leader</th>
+    <th>Join Date</th>
+  </tr>
+ {% for employee in employees %}
+  <tr>
+    <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
+    <th>{{ employee.employee_name }}</th>   
+    <th>{{ employee.phone_no }}</th>
+    <th>{{ employee.designation }}</th>
+    <th>{{ employee.leader }}</th>
+    <th>{{ employee.join_date }}</th>
+    <!-- <th><a href="/team/{{ team.id }}/details/"><button type="button" class="btn btn-secondary">Details</button></a></th> -->
+  </tr>
+{% endfor %}
+</table> 
+<!-- <hr> -->
+<!-- <input type="submit" value="Edit"> -->
+<!-- <hr> -->
+<!-- <input type="submit" value="Edit"> -->
+<hr>
+
+{% endblock %}

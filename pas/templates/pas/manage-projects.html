@@ -1,0 +1,56 @@
+{% extends 'pas/base.html' %}
+
+{% block title %}Manage Teams{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-bottom:15px"> 
+<ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <a class="nav-link" href="/dashboard">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/manage-projects/">Manage Projects</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/manage-groups/">Manage Groups</a>
+    </li>
+  </ul>
+</div>
+    <h2>Projects    
+      <div style = "float:right;">
+          <a href="/manage/"><button type="button" class="btn btn-secondary" style="margin-right:0px">Show All</button></a> <a href="/manage/hide-finished"><button type="button" class="btn btn-secondary" style="margin-right:10px">Hide Finished</button></a><a href="/manage/show-overdue"><button type="button" class="btn btn-secondary">Show Overdue</button></a>  <a href="/project/add/"><button type="button" class="btn btn-primary" >Add Projects</button></a>  
+        </div>
+    </h2>    
+<FORM action="..." method="post"></FORM>
+<table class="table">
+   <tr>
+    <!-- <th>Edit</th> -->
+    <th>Project Name</th>
+    <th>Department</th>
+    <th>Progress</th>
+  </tr>
+ {% for project in project_list %}
+  <tr>
+    <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
+    <th>{{ project.project_name }}</th>    
+    <th>{{ project.department }}</th>
+    <th>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: {{ project.percent }}%;" aria-valuenow="{{ project.percent }}" aria-valuemin="0" aria-valuemax="100">
+          
+        {{ project.percent }}%
+      
+      </div>
+    </div>
+    </th>
+    <th><a href="/project/{{ project.id }}/details/"><button type="button" class="btn btn-secondary">Details</button></a></th>
+  </tr>
+{% endfor %}
+</table> 
+<!-- <hr> -->
+<!-- <input type="submit" value="Edit"> -->
+<!-- <hr> -->
+<!-- <input type="submit" value="Edit"> -->
+<hr>
+
+{% endblock %}

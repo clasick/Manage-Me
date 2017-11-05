@@ -19,16 +19,16 @@
 </div>
 </br>
 <div class="container" style="padding-bottom:15px">
-    <h2 class='bd-title' id='content'>{{ team.team_name }}     <div class="float-right">
-            <a href="/team/{{ team.id }}/edit/" class="btn btn-secondary" >Edit Details</a>
-            <a href="/team/{{ team.id }}/delete/" class="btn btn-danger">Delete</a>
+    <h2 class='bd-title' id='content'>{{ panel.panel_name }}     <div class="float-right">
+            <a href="/panel/{{ panel.id }}/edit/" class="btn btn-secondary" >Edit Details</a>
+            <a href="/panel/{{ panel.id }}/delete/" class="btn btn-danger">Delete</a>
             </div> </h2>
             </div>
           </br>
     <div class="card">
             <div class="card-header">
                     
-   Team Details 
+   Panel Details 
       </div>
  
     
@@ -37,7 +37,7 @@
             
             </br>
                     <div class="row">
-                            {% for employee in team.employee_set.all %}
+                            {% for employee in panel.employee_set.all %}
                             <div class="col-sm-4 mb-3">
                                     <div class="card">
                                       <div class="card-body">
@@ -65,7 +65,7 @@
                         {% endfor %}
 
                     </div>      
-                    <a href="/team/{{ team.id }}/employee/add/" class="btn btn-primary float-right" >Add Employee</a>                                            
+                    <a href="/panel/{{ panel.id }}/employee/add/" class="btn btn-primary    float-right" >Add Employee</a>                                            
             </div>
           </div> 
         </div>

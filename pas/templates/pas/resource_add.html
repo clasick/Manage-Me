@@ -1,0 +1,33 @@
+{% extends 'pas/base.html' %}
+
+{% block title %}Add Resource{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-bottom:15px"> 
+  <div class="container" style="padding-bottom:15px"> 
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/manage">Manage Teams</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Schedule Reviews</a>
+      </li>
+    </ul>
+</div>
+        </div>
+
+        <h2>Add New Resource: </h2>
+        
+        <form action="" method="post">
+            {% csrf_token %}
+            <table>
+            {{ form.as_p }}
+            </table>
+            <input type="submit" value="Submit" />
+        </form>
+
+
+{% endblock %}

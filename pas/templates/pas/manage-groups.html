@@ -1,0 +1,81 @@
+{% extends 'pas/base.html' %}
+
+{% block title %}Manage Teams{% endblock %}
+
+
+{% block content %}
+<div class="container" style="padding-bottom:15px"> 
+<ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <a class="nav-link" href="/dashboard">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/manage-projects/">Manage Projects</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="#">Manage Groups</a>
+    </li>
+  </ul>
+</div>
+    <h2>Teams    
+      <div style = "float:right;">
+          <a href="/team/add/"><button type="button" class="btn btn-primary" >Add Team</button></a>  
+        </div>
+    </h2>    
+<FORM action="..." method="post"></FORM>
+<table class="table">
+   <tr>
+    <!-- <th>Edit</th> -->
+    <th>Team Name</th>
+    <th>Current Project</th>
+  </tr>
+ {% for team, project in team_list %}
+  <tr>
+    <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
+    <th>{{ team.team_name }}</th>    
+    {% if project %}
+    <th>{{ project.project_name }}</th>
+    {% else %}
+    <th>No Active Project</th>
+    {% endif %}
+    <th><a href="/team/{{ team.id }}/details/"><button type="button" class="btn btn-secondary float-right">Details</button></a> </th>
+  </tr>
+{% endfor %}
+</table> 
+
+<h2>Panels    
+        <div style = "float:right;">
+            <a href="/panel/add/"><button type="button" class="btn btn-primary" >Add Panel</button></a>  
+          </div>
+      </h2>    
+  <FORM action="..." method="post"></FORM>
+  <table class="table">
+     <tr>
+      <!-- <th>Edit</th> -->
+      <th>Panel Name</th>
+      <th>Current Project</th>
+    </tr>
+   {% for panel, project in panel_list %}
+    <tr>
+      <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
+      <th>{{ panel.panel_name }}</th>    
+      {% if project %}
+      <th>{{ project.project_name }}</th>
+      {% else %}
+      <th>No Active Project</th>
+      {% endif %}
+      <th><a href="/panel/{{ panel.id }}/details/"><button type="button" class="btn btn-secondary float-right">Details</button></a> 
+      </th>
+    </tr>
+  {% endfor %}
+  </table> 
+
+
+
+<!-- <hr> -->
+<!-- <input type="submit" value="Edit"> -->
+<!-- <hr> -->
+<!-- <input type="submit" value="Edit"> -->
+<hr>
+
+{% endblock %}

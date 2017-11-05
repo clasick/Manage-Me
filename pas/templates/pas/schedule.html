@@ -27,20 +27,20 @@
    <tr>
     <!-- <th>Edit</th> -->
     <th>Team Name</th>
+    <th>Department</th>
     <th>Assigned Project</th>
-    <th>Budget</th>
     <th>Progress</th>
   </tr>
  {% for team in all_team_list %}
   <tr>
     <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
     <th>{{ team.team_name }}</th>    
+    <th>{{ team.project_set.all.0.department }}</th>
     {% if team.project_set.all.0 %}
     <th>{{ team.project_set.all.0.project_name }}</th>
     {% else %}
       <th>No active project</th>
       {% endif %}
-    <th>₹ {{ team.budget }}</th>
     <th>
     <div class="progress">
       <div class="progress-bar" role="progressbar" style="width: {{ team.project_set.all.0.percent }}%;" aria-valuenow="{{ team.project_set.all.0.percent }}" aria-valuemin="0" aria-valuemax="100">

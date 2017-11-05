@@ -1,0 +1,53 @@
+{% extends 'pas/base.html' %}
+
+{% block title %}Add Team{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-bottom:15px"> 
+  <div class="container" style="padding-bottom:15px"> 
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/manage-projects/">Manage Teams</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="/manage-groups/">Manage Groups</a>
+      </li>
+    </ul>
+</div>
+        </div>
+
+        <h2>Add Employee </h2>
+        <form action="" method="post">     
+                {% csrf_token %}                
+        <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Add</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Designation</th>
+                    <th scope="col">Department</th>
+                  </tr>
+                </thead>
+                <tbody>
+                        {% for employee in employee_list %}                        
+                  <tr>
+                    <th scope="row"> <div class="form-check" style="margin-left:30px;">
+                              <input type="checkbox" class="form-check-input" name = "employees" id="option{{ employee.id }}" value="{{ employee.id }}">                              
+                                                      </div></th>
+                    <td>{{ employee.employee_name }}</td>
+                    <td>{{ employee.designation }}</td>
+                    <td>{{ employee.department }}</td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+              <input type="submit" value="Submit" class="btn btn-primary"/>        
+              
+              </form>
+
+
+{% endblock %}

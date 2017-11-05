@@ -1,0 +1,270 @@
+{% extends 'pas/base.html' %}
+{% load humanize %}
+
+{% block title %}{{ project.project_name }}{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-bottom:15px"> 
+<ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <a class="nav-link" href="/dashboard">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/manage-projects/">Manage Projects</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Manage Groups</a>
+    </li>
+  </ul>
+</div>
+</br>
+<div class="container" style="padding-bottom:15px">
+    <h2 class='bd-title' id='content'>{{ project.project_name }}     <div class="float-right">
+            <a href="/project/{{ project.id }}/edit/" class="btn btn-secondary" >Edit Details</a>
+            <a href="/project/{{ project.id }}/delete/" class="btn btn-danger">Delete Project</a>
+            </div> </h2>
+            </div>
+          </br>
+    <div class="card">
+            <div class="card-header">
+                    
+   Project Details 
+      </div>
+        <div class="card-body">
+               
+           <div class="progress">
+           <div class="progress-bar" role="progressbar" style="width: {{ project.percent }}%;" aria-valuenow="{{ project.percent }}" aria-valuemin="0" aria-valuemax="100">{{ project.percent }}%</div>
+          </div>
+         <p class="card-text">
+         </br>  
+         <b>Department</b>: {{ project.department }} 
+        </br> </br>
+             <b>Description</b>: {{ project.description }} 
+      </br>
+    </br>
+             <b>Started</b>: {{ project.start_date }}
+         </br>
+             <b>Deadline</b>: {{ project.deadline }}
+       </br>
+      </br>
+      {{ num }}
+      
+      <div class="row">
+        <div class = "col-sm-4 mb-3">
+      <div class="card" style="width: 20rem;">
+          <div class="card-body">
+            <h4 class="card-title">{{ project.team.team_name }}</h4>
+            <h6 class="card-subtitle mb-2 text-muted">Assigned Team </h6>
+           <a href="/team/{{ team.id }}/edit/" class="btn btn-secondary" >Show Details</a>
+          </div>
+        </div>   
+        </div>
+
+        <div class ="col-sm-4 mb-3">
+        <div class="card" style="width: 20rem;">
+            <div class="card-body">
+              <h4 class="card-title">{{ project.panel.panel_name }}</h4>
+              <h6 class="card-subtitle mb-2 text-muted">Assigned Panel</h6>
+             <a href="/team/{{ team.id }}/edit/" class="btn btn-secondary" >Show Details</a>
+            </div>
+          </div> 
+          </div>
+        </div>
+       </p>
+     </div>      
+    
+          <!-- <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">{{ project.team.team_name }}</h4>
+              <h6 class="card-subtitle mb-2 text-muted">Team Details</h6>
+
+          </div> 
+
+            <div class="card-body">
+            
+            </br>
+                    <div class="row">
+                            {% for employee in project.team.employee_set.all %}
+                            <div class="col-sm-4 mb-3">
+                                    <div class="card">
+                                      <div class="card-body">
+                                        <h4 class="card-title">{{ employee.employee_name }}</h4>
+                                        <h6 class="card-subtitle mb-2 text-muted>">
+                                          {% if employee.leader %}
+                                            <b>Leader</b> - 
+                                          {% endif %}
+                                          {{ employee.designation }}</h6>
+                                        <hr>    
+                                        <p class="card-text">Phone: {{ employee.phone_no }} 
+                                        </br>
+                                        Join Date: {{ employee.join_date }}
+                                        </p>
+                            
+                                     
+                                    </div>
+                                    </div>
+                                  </div>
+                        {% endfor %}
+                    </div>      
+            </div>
+          </div>  -->
+        </div>
+    
+
+        
+            </br>
+    
+            <div class="card">
+                <div class="card-header">
+                  <div class="container">
+                  <div class="row">                      
+                      <div class="col-lg-6">                          
+                    <h4 class="card-title">Resources</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Manage the resources of the project</h6>
+                      </div>
+                      <div class="col-lg-6">                          
+                    <a href="/project/{{ project.id }}/resource/add" class="btn btn-primary float-right" >Add</a>                    
+                </div> 
+                </div>
+                </div>
+                </div>
+      
+                  <div class="card-body">
+                   {% if total <= limit %}
+                    <div class="alert alert-success" role="alert">
+                          <strong>It's all good!</strong> The project resource usage is within the budget of a {{ project.department.department_name }} project. 
+                        </div>
+                   {% else %}
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Oh no!</strong> The project resource usage is over the budget of a {{ project.department.department_name }} project. 
+                          </div>
+
+                      {% endif %}
+
+
+                      <table class="table table-sm">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Resource Name</th>
+                              <th scope="col">Amount</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for resource in resource_list %}
+                            <tr>
+                              <th scope="row">{{ forloop.counter }} </th>
+                              <td>{{ resource.resource_name }}</td>
+                              <td>{{ resource.amount }}</td>
+                            </tr>
+                            {% endfor %}
+                            <th></th>
+                            <td style = "font-size:20px"><b class="float-right">Total</b></td>
+                            <td style = "font-size:20px">{{ total }}</td>
+                          </tbody>
+                        </table>      
+                          </div>       
+                  </div>
+
+                </br>
+              <div class="card">
+                  <div class="card-header">
+                      <div class="container">
+                          <div class="row">                      
+                              <div class="col-lg-6">                          
+                            <h4 class="card-title">Review</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">Schedule reviews for the project</h6>
+                              </div>
+                              <div class="col-lg-6">                          
+                            <a href="/project/{{ project.id }}/review/add" class="btn btn-primary float-right" >Schedule</a>                    
+                        </div> 
+                        </div>
+        </div>
+                  </div> 
+                    {% if last %}        
+                    <div class="card-body">
+                        <div class="card text-white bg-primary">
+                            <div class="card-header">Upcoming Review Remainder</div>
+                            <div class="card-body">
+                       
+                              <h4 class="card-title"><b>Next Review on </b> {{ last.review_date }}</h4>
+                              <p class="card-text">{{ last.comments }}</p>
+                             
+                              
+                            </div>
+                            <div class="card-footer">
+                                <small class="text">in {{ last.review_date|naturaltime }}</small>
+                              </div>
+                          </div> 
+                          {% else %}
+
+                          <div class="card-body">
+                              <div class="card text-dark bg-light">
+                                  <div class="card-header">Upcoming Review Remainder</div>
+                                  <div class="card-body">
+                             
+                                    <h4 class="card-title"><b>No review is upcoming.</b></h4>
+                                    <p class="card-text">Please schedule a review for this project.</p>
+                                
+                                  </div>  
+                          
+                                </div> 
+
+                          {% endif %}    
+                        </br>
+                          <div class="card-group">  
+                            {% for review in review_list %}
+                              {% if review.review_date < today %}
+                              <div class="card">
+                                <div class="card-body">
+                                  <h4 class="card-title">{{ review.review_date }}</h4>
+                                  <p class="card-text">{{ review.comments }}</p>
+                                </div>
+                                <div class="card-footer">
+                                  <small class="text-muted">finished {{ review.review_date|naturaltime }}</small>
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% endfor %}
+                            </div>
+                  </div> 
+
+
+          <!-- <div class="card">
+              <div class="card-header">
+                  <h4 class="card-title">{{ project.panel.panel_name }}</h4>
+                  <h6 class="card-subtitle mb-2 text-muted">Panel Details</h6>
+    
+              </div> 
+
+          <div class="card-body">
+             
+          </br>
+                  <div class="row">
+                          {% for employee in project.panel.employee_set.all %}
+                          <div class="col-sm-4 mb-3">
+                                  <div class="card">
+                                    <div class="card-body">
+                                      <h4 class="card-title">{{ employee.employee_name }}</h4>
+                                      <h6 class="card-subtitle mb-2 text-muted>">
+                                        {% if employee.leader %}
+                                          <b>Leader</b> - 
+                                        {% endif %}
+                                        {{ employee.designation }}</h6>
+                                      <hr>    
+                                      <p class="card-text">Phone: {{ employee.phone_no }} 
+                                      </br>
+                                      Join Date: {{ employee.join_date }}
+                                      </p>
+                          
+                                
+                                  </div>
+                                  </div>
+                                </div>
+                      {% endfor %}
+                  </div>      
+          </div>
+        </div>  -->
+
+
+{% endblock %}
