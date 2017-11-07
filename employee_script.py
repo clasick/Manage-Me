@@ -1,7 +1,8 @@
-from pas.models import Employee
+#from pas.models import Employee
 
-employee = '''
-Ela Christon
+import random
+
+employee = '''Ela Christon
 Sebastian Pennington
 Migdalia Durrance
 Stephane Fahnestock
@@ -50,7 +51,24 @@ Marhta Crosland
 Granville Reaves
 Na Shealey
 Veda Beaston
-Lucila Schall
-'''
+Lucila Schall'''
 
 print(employee.split('\n'))
+
+
+s = string.digits
+
+''.join(random.sample(s,10))
+
+DESIGNATION = ['Developer', 'Designer', 'Debugger', 'Tester', 'Documenter']
+
+
+
+
+ phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number is invalid. Enter up to 10 digits.")
+    team = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL)
+    designation = models.CharField(max_length=10, null=True)
+    leader = models.BooleanField()
+    join_date = models.DateField()
+    department = models.ForeignKey(Department, null=True)
+    panel = models.ForeignKey(Panel, null=True, blank=True, on_delete=models.SET_NULL)

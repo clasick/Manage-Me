@@ -219,7 +219,7 @@
                           {% endif %}    
                         </br>
                             {% for review in review_list %}
-                              {% if review.review_date < today %}
+                              {% if review.review_date < today or review.review_date < last.review_date %}
                               <div class="card">
                                 <div class="card-body">
                                   <h4 class="card-title">{{ review.review_date }}</h4>

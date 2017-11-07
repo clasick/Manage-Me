@@ -40,6 +40,7 @@ class AddEmployeeForm(forms.ModelForm):
 	employee_name = models.CharField(max_length=50)
 	phone_no = models.CharField(max_length=10)
 	designation = forms.ChoiceField(DESIGNATIONS)
+	leader = forms.BooleanField()
 	join_date = forms.DateField(widget=extras.SelectDateWidget(years=range(1970, 2017)), label="Join Date (Default - Today) :", initial=datetime.datetime.today())
 
 
