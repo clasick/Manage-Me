@@ -1,6 +1,6 @@
-#from pas.models import Employee
+from pas.models import Employee
 
-import random
+import random, string
 
 employee = '''Ela Christon
 Sebastian Pennington
@@ -51,24 +51,267 @@ Marhta Crosland
 Granville Reaves
 Na Shealey
 Veda Beaston
-Lucila Schall'''
+Lucila Schall
+Leighann Boughner
+Gabriel Perras
+Karon Raymond
+Myron Collman
+Stephenie Richman
+Gene Duchesne
+Mora Capoccia
+Ivan Igo
+Cinthia German
+Florence Vincelette
+Lissette Marcy
+Tish Schacher
+Devora Bueche
+Rosaura Stanwood
+Eleanor Sink
+Almeda Ganser
+Agustina Hymas
+Dewey Folkerts
+Alysa Swick
+Eugenie Verhey
+Shelia Conlon
+Willis Trenholm
+Aurea Gao
+Dakota Bonk
+Malissa Betances
+Jennette Fluker
+Isabella Saulter
+Lenny Simmerman
+Dwight Sevilla
+Erin Oakes
+Benita Trawick
+Jasper Payer
+Phuong Whitner
+Catharine Wootton
+Willard Arden
+Alla Blecha
+Jacqualine Poynor
+Delmar Kuchta
+Tora Cockrum
+Madeline Bublitz
+Deeanna Mulroy
+Ila Celestin
+Eleanora Lydon
+Candida Hemond
+Lucila Taliaferro
+Ruthie Zayas
+Miguel Gangi
+Gladis Starner
+Delbert Ricci
+Jenee Mccrimmon
+Hayley Vidrine  
+Trinity Loughman  
+Kristeen Roberge  
+Lorrie Lung  
+Emanuel Kerney  
+Barry Poplar  
+Tajuana Stutler  
+Adelina Delagarza  
+Arlinda Persinger  
+Aubrey Laplante  
+Everett Prewett  
+Myriam Ritacco  
+Bette Reasoner  
+Bill Welcome  
+Manuel Schmucker  
+Britni Acuff  
+Evan Clegg  
+Delta Emond  
+Zora Loomis  
+Neida Altizer  
+Valarie Ellenberger  
+Colleen Franchi  
+Arletha Gisler  
+Kittie Mari  
+Marquita Leggett  
+Elza Farney  
+Charlena Vavra  
+Minnie Cathey  
+Rashad Matthies  
+Demetrice Lemoine  
+Denyse Neace  
+Jovan Zager  
+Dorthy Heidecker  
+Annita Rarick  
+Annice Coen  
+Estella Rust  
+Soraya Yoshimura  
+Jackqueline Guimond  
+Heike Fail  
+Alyce Gravely  
+Roslyn Mackowiak  
+Tori Sprouse  
+Sina Mcclintock  
+Annis Cruzado  
+Amelia Conner  
+Michele Boose  
+Lala Lightsey  
+Myrna Galyean  
+Cyrus Laxson  
+Marcos Sao
+Jay Laubscher  
+Karima Mercedes  
+Shannon Clegg  
+Jin Verges  
+Andreas Walden  
+Mireille Hurtado  
+Tamar Gasca  
+Harley Marek  
+Shawn Losee  
+Kendrick Ricotta  
+Danial Dressel  
+Takisha Crawshaw  
+Kitty Vire  
+Kizzy Na  
+Ruthie Bash  
+Chang Poovey  
+Chris Marlatt  
+Cyrstal Remy  
+Sharen Paneto  
+Lenita Zalenski  
+Jody Sicard  
+Cletus Murff  
+Shenna Eden  
+Loise Sorg  
+Wilbert Jackman  
+Evie Dave  
+Florine Lescarbeau  
+Clarence Brister  
+Lashawnda Gwin  
+Davis Munsey  
+Kristopher Hobson  
+Valene Jumper  
+Jeana Zeller  
+Nam Callaghan  
+Kerrie Gilreath  
+Maybelle Valiente  
+Arica Recalde  
+Stewart Badgett  
+Phuong Esqueda  
+Columbus Hildebrand  
+Casandra Palin  
+Fidelia Auxier  
+Laci Metz  
+Daron Eisenmenger  
+Maire Brierly  
+Catalina Amidon  
+Eugene Cogburn  
+Freida Pfaff  
+Brian Harstad  
+Jerri Brucker
+Sherita Tartt  
+Donnetta Wool  
+Hertha Legree  
+Kym Costantino  
+Hue Bowne  
+Denna Blais  
+Kenisha Horvath  
+Zelda Pearlman  
+Jamey Warriner  
+Sharonda Kyker  
+Yesenia Hembree  
+Ivy Lebrun  
+Karan Accardo  
+Evette Bardsley  
+Lashell Deyo  
+Pasty Kraft  
+Debi Mccarty  
+Domonique Mcglaughlin  
+Aja Roos  
+Garnett Mcwilliam  
+Hailey Zheng  
+Lindsy Hamlet  
+Joellen Corchado  
+Dinah Barrientez  
+Ilse Lindberg  
+Tari Hartt  
+Pauletta Schweigert  
+Marianne Menges  
+Paulita Vandyne  
+Shelli Munsell  
+Aurelio Grandison  
+Ashlea Dietz  
+Raelene Slaven  
+Robbin Hawbaker  
+Royce Leitner  
+Marquerite Lank  
+Zita Gorley  
+Kathern Cabana  
+Anette Eckhart  
+Astrid Saracino  
+Nova Thurlow  
+Shantell Lundy  
+Liza Lightner  
+Granville Ducan  
+Lewis Hillsman  
+Clotilde Brumback  
+Maricela Rochon  
+Shani Hinderliter  
+Gaylene Buckland  
+Cruz Stallcup
+Jennefer Rocha  
+Emmitt Damron  
+Nida Reid  
+Johna Reinhart  
+Dante Betancourt  
+Lavone Carrier  
+Brittni Perugini  
+Harvey Frasier  
+Joelle Lundin  
+Hiroko Crownover  
+Sergio Mister  
+Tamika Hoefle  
+Yajaira Musick  
+Dulce Dupuis  
+Mariann Gattison  
+Shizue Frisby  
+Jeri Baugh  
+Kanesha Norvell  
+Nichol Ruffner  
+Horace Domingues  
+Lakeshia Mcclane  
+Shoshana Messmer  
+Anja Narvaez  
+Florentino Tregre  
+Mabelle Lescarbeau  
+Kevin Donlan  
+Nakita Stefanik  
+Berta Dalpiaz  
+Idell Younkin  
+Christel Turnbough  
+Demarcus Fearon  
+Lisette Logsdon  
+Abdul Giglio  
+Carmelia Haller  
+Addie Barrows  
+Otelia Thakkar  
+Odessa Deckard  
+Williemae Tidmore  
+Nova Herford  
+Lola Seltzer  
+Sarai Drennen  
+Mendy Armendariz  
+Isabella Bondy  
+Roxy Picou  
+Torie Lesher  
+Na Imai  
+Britta Mcdonell  
+Kisha Brassell  
+Yuette Wickert  
+Barabara Manrique'''
 
-print(employee.split('\n'))
-
-
+employee_list = employee.split('\n')
 s = string.digits
-
-''.join(random.sample(s,10))
-
 DESIGNATION = ['Developer', 'Designer', 'Debugger', 'Tester', 'Documenter']
 
-
-
-
- phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number is invalid. Enter up to 10 digits.")
-    team = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL)
-    designation = models.CharField(max_length=10, null=True)
-    leader = models.BooleanField()
-    join_date = models.DateField()
-    department = models.ForeignKey(Department, null=True)
-    panel = models.ForeignKey(Panel, null=True, blank=True, on_delete=models.SET_NULL)
+for employee_name in employee_list:
+    e = Employee()
+    e.employee_name = employee_name
+    e.phone_no = ''.join(random.sample(s,10))
+    e.designation = DESIGNATION[random.randint(0,4)]
+    e.join_date = str(random.randint(1994, 2017)) + '-' + str(random.randint(1,12)) + '-' + str(random.randint(1,28))
+    e.leader = False
+    e.save()
