@@ -24,14 +24,14 @@ class Panel(models.Model):
         return self.panel_name
 
 class Project(models.Model):
-    team = models.ForeignKey(Team, null=True, blank=True)
+    team = models.ForeignKey(Team, null=True, blank=True, on_delete=models.SET_NULL)
     project_name = models.CharField(max_length=200)
     description = models.CharField(max_length=2000, default="")
     start_date = models.DateField(("Start Date"))
     deadline = models.DateField(("Deadline"))
     percent = models.IntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
     department = models.ForeignKey(Department, null=True)
-    panel = models.ForeignKey(Panel, null=True)
+    panel = models.ForeignKey(Panel, null=True, on_delete=models.SET_NULL)
     def __str__(self):
         return self.project_name
 
@@ -44,14 +44,14 @@ class Resource(models.Model):
 
 class Employee(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number is invalid. Enter up to 10 digits.")
-    team = models.ForeignKey(Team, null=True)
+    team = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL)
     employee_name = models.CharField(max_length=50)
     phone_no =  models.CharField(validators=[phone_regex], max_length=10, blank=True)
     designation = models.CharField(max_length=10, null=True)
     leader = models.BooleanField()
     join_date = models.DateField()
     department = models.ForeignKey(Department, null=True)
-    panel = models.ForeignKey(Panel, null=True, blank=True)
+    panel = models.ForeignKey(Panel, null=True, blank=True, on_delete=models.SET_NULL)
     def __str__(self):
         return self.employee_name
 

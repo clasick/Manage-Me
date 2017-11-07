@@ -185,10 +185,7 @@ def team_edit(request, team_id):
 		return render(request, 'pas/index.html', context)
 	
 def team_delete(request, team_id):
-	t = Team.objects.get(pk=team_id)
-	p = Project.objects.get(team=t)
-	p.team = None
-	t.delete()
+	Team.objects.get(pk=team_id).delete()
 	return redirect('pas:manage_groups')
 
 def employee_delete(request, employee_id):
