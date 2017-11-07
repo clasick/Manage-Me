@@ -185,8 +185,11 @@ def team_edit(request, team_id):
 		return render(request, 'pas/index.html', context)
 	
 def team_delete(request, team_id):
-    Team.objects.get(pk=team_id).delete()
-    return redirect('pas:manage_groups')
+	t = Team.objects.get(pk=team_id)
+	p = Project.objects.get(team=t)
+	p.team = None
+	t.delete()
+	return redirect('pas:manage_groups')
 
 def employee_delete(request, employee_id):
 	e = Employee.objects.get(pk=employee_id)
@@ -196,9 +199,8 @@ def employee_delete(request, employee_id):
 
 def project_delete(request, project_id):
     p = Project.objects.get(pk=project_id)
-    team_id = p.team_id
     p.delete()
-    return redirect('pas:project_details', team_id)
+    return redirect('pas:manage_projects')
 
 def panel_delete(request, panel_id):
     p = Panel.objects.get(pk=panel_id)
@@ -226,7 +228,8 @@ def project_details(request, project_id):
 
 def team_details(request, team_id):
 	team = get_object_or_404(Team, pk=team_id)
-	context = {'team': team}
+	project = Project.objects.filter(team=team).first()
+	context = {'team': team, 'project':project}
 	return render(request, 'pas/team_details.html', context)
 
 

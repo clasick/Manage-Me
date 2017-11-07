@@ -35,9 +35,19 @@
       </div>
  
     
+    
           <div class="card">
             <div class="card-body">
-            
+              <b>
+              {% if project %}
+              Current Project:                 </b>
+              {{ project.project_name }}
+              {% else %}
+                No Active Project                 </b>
+                
+              {% endif %}
+            </br>
+
             </br>
                     <div class="row">
                             {% for employee in team.employee_set.all %}
