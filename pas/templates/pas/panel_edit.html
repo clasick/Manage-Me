@@ -1,6 +1,6 @@
 {% extends 'pas/base.html' %}
 
-{% block title %}Edit Project{% endblock %}
+{% block title %}Edit Panel{% endblock %}
 
 
 {% block content %}
@@ -10,10 +10,10 @@
         <a class="nav-link" href="/dashboard/">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="/manage-projects/">Manage Projects</a>
+        <a class="nav-link" href="/manage-projects/">Manage Projects</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/manage-groups/">Manage Groups</a>
+        <a class="nav-link active" href="/manage-groups/">Manage Groups</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/manage-employees/">Manage Employee</a>
@@ -22,7 +22,7 @@
   </div>
 
 
-        <h2>Edit Project: </h2>
+        <h2>Edit Panel: </h2>
         
         <form action="" method="post">
             {% csrf_token %}

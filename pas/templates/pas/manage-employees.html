@@ -2,7 +2,6 @@
 
 {% block title %}Manage Projects{% endblock %}
 
-
 {% block content %}
 <div class="container" style="padding-bottom:15px"> 
   <ul class="nav nav-pills nav-fill">
@@ -20,35 +19,30 @@
       </li>
     </ul>
   </div>
-
-
     <h2>Employees    
       <div style = "float:right;">
-          <a href="/manage/"><button type="button" class="btn btn-secondary" style="margin-right:0px">Show All</button></a> <a href="/manage/hide-finished"><button type="button" class="btn btn-secondary" style="margin-right:10px">Hide Finished</button></a><a href="/manage/show-overdue"><button type="button" class="btn btn-secondary">Show Overdue</button></a>  <a href="/employee/add"><button type="button" class="btn btn-primary" >Add Employee</button></a>  
+      <a href="/employee/add/"><button type="button" class="btn btn-primary" >Add Employee</button></a>  
         </div>
     </h2>    
 <FORM action="..." method="post"></FORM>
 <table class="table table-striped">
-    <thead>        
+    <thead>
+        
    <tr>
     <!-- <th>Edit</th> -->
     <th>Name</th>
-    <th>Phone No.</th>
+    <th>Department</th>
     <th>Designation</th>
-    <th>Leader</th>
-    <th>Join Date</th>
   </tr>
 </thead>
       
- {% for employee in employees %}
+ {% for employee in employee_list %}
   <tr>
     <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
-    <th>{{ employee.employee_name }}</th>   
-    <th>{{ employee.phone_no }}</th>
+    <th>{{ employee.employee_name }}</th>    
+    <th>{{ employee.department }}</th>
     <th>{{ employee.designation }}</th>
-    <th>{{ employee.leader }}</th>
-    <th>{{ employee.join_date }}</th>
-    <!-- <th><a href="/team/{{ team.id }}/details/"><button type="button" class="btn btn-secondary">Details</button></a></th> -->
+    <th><a href="/employee/{{ employee.id }}/details/"><button type="button" class="btn btn-secondary">Details</button></a></th>
   </tr>
 {% endfor %}
 </table> 

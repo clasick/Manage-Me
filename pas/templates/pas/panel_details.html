@@ -5,18 +5,22 @@
 
 {% block content %}
 <div class="container" style="padding-bottom:15px"> 
-<ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboard">Dashboard</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="/manage-projects/">Manage Projects</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">Manage Groups</a>
-    </li>
-  </ul>
-</div>
+  <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard/">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/manage-projects/">Manage Projects</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/manage-groups/">Manage Groups</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/manage-employees/">Manage Employee</a>
+      </li>
+    </ul>
+  </div>
+
 </br>
 <div class="container" style="padding-bottom:15px">
     <h2 class='bd-title' id='content'>{{ panel.panel_name }}     <div class="float-right">
@@ -54,8 +58,7 @@
                                         </p>
 
                                         <div class ="float-right">
-                                        <a href="/employee/{{ employee.id }}/edit" class="btn btn-secondary">Edit Details</a>                                            
-                                        <a href="/employee/{{ employee.id }}/delete" class="btn btn-danger" >Remove</a>                                            
+                                        <a href="/employee/{{ employee.id }}/edit" class="btn btn-secondary">Details</a>                                            
                                         </div>
                             
                                      
@@ -65,7 +68,7 @@
                         {% endfor %}
 
                     </div>      
-                    <a href="/panel/{{ panel.id }}/employee/add/" class="btn btn-primary    float-right" >Add Employee</a>                                            
+                    <a href="/panel/{{ panel.id }}/employees/edit/" class="btn btn-secondary float-right" >Edit Panel Members</a>                                            
             </div>
           </div> 
         </div>

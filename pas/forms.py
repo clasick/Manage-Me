@@ -56,3 +56,8 @@ class AddReviewForm(forms.ModelForm):
 		exclude = ("project","panel")
 	review_date = forms.SplitDateTimeField(widget=widgets.SplitDateTimeWidget())
 	comments = models.CharField(max_length=2000, default='Default Comment')
+
+class AddPanelForm(forms.ModelForm):
+	class Meta:
+		model = Panel
+		fields = "__all__" 

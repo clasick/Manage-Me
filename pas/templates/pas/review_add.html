@@ -6,21 +6,33 @@
 <div class="container" style="padding-bottom:15px"> 
   <div class="container" style="padding-bottom:15px"> 
     <ul class="nav nav-pills nav-fill">
-      <li class="nav-item">
-        <a class="nav-link" href="/dashboard">Dashboard</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="/manage">Manage Teams</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Schedule Reviews</a>
-      </li>
-    </ul>
-</div>
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard/">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/manage-projects/">Manage Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/manage-groups/">Manage Groups</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/manage-employees/">Manage Employee</a>
+        </li>
+      </ul>
+    </div>
+  
         </div>
 
         <h2>Schedule New Review: </h2>
         
+        {% if error %}
+
+        <div class="alert alert-danger" role="alert">
+          <strong>Error!</strong> {{ error }}
+        </div>
+
+        {% endif %}
+
         <form action="" method="post">
             {% csrf_token %}
             <table>

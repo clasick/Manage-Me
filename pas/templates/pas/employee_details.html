@@ -1,0 +1,118 @@
+{% extends 'pas/base.html' %}
+{% load humanize %}
+
+{% block title %}{{ employee.employee_name }}{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-bottom:15px"> 
+  <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard/">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/manage-projects/">Manage Projects</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/manage-groups/">Manage Groups</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/manage-employees/">Manage Employee</a>
+      </li>
+    </ul>
+  </div>
+</br>
+<div class="container" style="padding-bottom:15px">
+    <h2 class='bd-title' id='content'>{{ employee.employee_name }}     <div class="float-right">
+            <a href="/employee/{{ employee.id }}/edit/" class="btn btn-secondary" >Edit Details</a>
+            <a href="/employee/{{ employee.id }}/delete/" class="btn btn-danger">Delete Employee</a>
+            </div> </h2>
+            </div>
+          </br>
+    <div class="card">
+            <div class="card-header">
+                    
+   Employee Details 
+      </div>
+        <div class="card-body">
+               
+         <p class="card-text">
+         </br>  
+         <b>Department</b>: {{ employee.department }} 
+        </br>
+             <b>Designation</b>: {{ employee.designation }} 
+      </br>
+    </br>
+             <b>Phone no.</b>: {{ employee.phone_no }}
+         </br>
+             <b>Join Date</b>: {{ employee.join_date }}
+       </br>
+      </br>
+      {{ num }}
+      
+      <div class="row">
+
+        
+      {% if employee.team %}
+        <div class = "col-sm-4 mb-3">
+      <div class="card" style="width: 20rem;">
+          <div class="card-body">
+            <h4 class="card-title">{{ employee.team.team_name }}</h4>
+            <h6 class="card-subtitle mb-2 text-muted">Assigned Team </h6>
+           <a href="/team/{{ employee.team.id }}/details/" class="btn btn-secondary" >Show Details</a>
+          </div>
+        </div>   
+    </div>
+
+     {% else %}
+        <div class = "col-sm-4 mb-3">
+      <div class="card" style="width: 20rem;">
+          <div class="card-body">
+            <h4 class="card-title">No team assigned</h4>
+           <a href="/manage-groups/" class="btn btn-primary" >Add Team</a>
+          </div>
+        </div>   
+    </div>
+
+     {% endif %}
+
+
+     {% if employee.panel %}
+  
+
+     <div class ="col-sm-4 mb-3">
+        <div class="card" style="width: 20rem;">
+            <div class="card-body">
+              <h4 class="card-title">{{ employee.panel.panel_name }}</h4>
+              <h6 class="card-subtitle mb-2 text-muted">Assigned Panel</h6>
+             <a href="/panel/{{ employee.panel.id }}/details/" class="btn btn-secondary" >Show Details</a>
+            </div>
+          </div> 
+
+  {% else %}
+  
+
+  <div class ="col-sm-4 mb-3">
+    <div class="card" style="width: 20rem;">
+        <div class="card-body">
+          <h4 class="card-title">No panel assigned.</h4>
+          <a href="/manage-groups/" class="btn btn-primary" >Add Panel</a>
+        </div>
+      </div> 
+  {% endif %}
+
+
+
+
+          </div>
+
+
+
+
+
+        </div>
+       </p>
+     </div>      
+    
+    </div>
+
+{% endblock %}

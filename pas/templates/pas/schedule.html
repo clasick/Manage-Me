@@ -1,29 +1,35 @@
 {% extends 'pas/base.html' %}
 
-{% block title %}Manage Teams{% endblock %}
+{% block title %}Manage Projects{% endblock %}
 
 
 {% block content %}
 <div class="container" style="padding-bottom:15px"> 
-<ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboard">Dashboard</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="/manage">Manage Teams</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">Schedule Reviews</a>
-    </li>
-  </ul>
-</div>
+  <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard/">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/manage-projects/">Manage Projects</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/manage-groups/">Manage Groups</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/manage-employees/">Manage Employee</a>
+      </li>
+    </ul>
+  </div>
+
     <h2>Teams    
       <div style = "float:right;">
           <a href="/manage/"><button type="button" class="btn btn-secondary" style="margin-right:0px">Show All</button></a> <a href="/manage/hide-finished"><button type="button" class="btn btn-secondary" style="margin-right:10px">Hide Finished</button></a><a href="/manage/show-overdue"><button type="button" class="btn btn-secondary">Show Overdue</button></a>  <a href="/team/add/"><button type="button" class="btn btn-primary" >Add Team</button></a>  
         </div>
     </h2>    
 <FORM action="..." method="post"></FORM>
-<table class="table">
+<table class="table table-striped">
+    <thead>
+        
    <tr>
     <!-- <th>Edit</th> -->
     <th>Team Name</th>
@@ -31,6 +37,8 @@
     <th>Assigned Project</th>
     <th>Progress</th>
   </tr>
+</thead>
+      
  {% for team in all_team_list %}
   <tr>
     <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->

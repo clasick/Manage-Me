@@ -1,34 +1,53 @@
 {% extends 'pas/base.html' %}
 
-{% block title %}Manage Teams{% endblock %}
+{% block title %}Manage Projects{% endblock %}
 
 
 {% block content %}
 <div class="container" style="padding-bottom:15px"> 
-<ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboard">Dashboard</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/manage-projects/">Manage Projects</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="#">Manage Groups</a>
-    </li>
-  </ul>
-</div>
-    <h2>Teams    
+  <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard/">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/manage-projects/">Manage Projects</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/manage-groups/">Manage Groups</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/manage-employees/">Manage Employee</a>
+      </li>
+    </ul>
+  </div>
+
+
+
+<nav class="nav nav-tabs" id="myTab" role="tablist">
+  <a class="nav-item nav-link active" id="nav-team-tab" data-toggle="tab" href="#nav-team" role="tab" aria-controls="nav-team" aria-selected="true">Teams</a>
+  <a class="nav-item nav-link" id="nav-panel-tab" data-toggle="tab" href="#nav-panel" role="tab" aria-controls="nav-panel" aria-selected="false">Panels</a>
+</nav>
+
+</br>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-team" role="tabpanel" aria-labelledby="nav-team-tab">
+
+
+  <h2>Teams    
       <div style = "float:right;">
           <a href="/team/add/"><button type="button" class="btn btn-primary" >Add Team</button></a>  
         </div>
     </h2>    
 <FORM action="..." method="post"></FORM>
-<table class="table">
+<table class="table table-striped">
+    <thead>        
    <tr>
     <!-- <th>Edit</th> -->
     <th>Team Name</th>
     <th>Current Project</th>
   </tr>
+</thead>
+      
  {% for team, project in team_list %}
   <tr>
     <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
@@ -42,33 +61,45 @@
   </tr>
 {% endfor %}
 </table> 
+  </div>
+  <div class="tab-pane fade" id="nav-panel" role="tabpanel" aria-labelledby="nav-panel-tab">
+
+
 
 <h2>Panels    
-        <div style = "float:right;">
-            <a href="/panel/add/"><button type="button" class="btn btn-primary" >Add Panel</button></a>  
-          </div>
-      </h2>    
-  <FORM action="..." method="post"></FORM>
-  <table class="table">
-     <tr>
-      <!-- <th>Edit</th> -->
-      <th>Panel Name</th>
-      <th>Current Project</th>
-    </tr>
-   {% for panel, project in panel_list %}
-    <tr>
-      <!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
-      <th>{{ panel.panel_name }}</th>    
-      {% if project %}
-      <th>{{ project.project_name }}</th>
-      {% else %}
-      <th>No Active Project</th>
-      {% endif %}
-      <th><a href="/panel/{{ panel.id }}/details/"><button type="button" class="btn btn-secondary float-right">Details</button></a> 
-      </th>
-    </tr>
-  {% endfor %}
-  </table> 
+  <div style = "float:right;">
+      <a href="/panel/add/"><button type="button" class="btn btn-primary" >Add Panel</button></a>  
+    </div>
+</h2>    
+<FORM action="..." method="post"></FORM>
+<table class="table table-striped">
+    <thead>
+        
+<tr>
+<!-- <th>Edit</th> -->
+<th>Panel Name</th>
+<th>Current Project</th>
+</tr>
+</thead>
+    
+{% for panel, project in panel_list %}
+<tr>
+<!-- <th><INPUT TYPE="radio" NAME="e1" VALUE="{{ team.id }}"></th> -->
+<th>{{ panel.panel_name }}</th>    
+{% if project %}
+<th>{{ project.project_name }}</th>
+{% else %}
+<th>No Active Project</th>
+{% endif %}
+<th><a href="/panel/{{ panel.id }}/details/"><button type="button" class="btn btn-secondary float-right">Details</button></a> 
+</th>
+</tr>
+{% endfor %}
+</table> 
+
+  </div>
+</div>
+
 
 
 

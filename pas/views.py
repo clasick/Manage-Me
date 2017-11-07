@@ -9,7 +9,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 from .models import Team, Project, Employee, Resource, Review, Panel
-from .forms import AddTeamForm, AddProjectForm, AddEmployeeForm, AddResourceForm, AddReviewForm
+from .forms import AddTeamForm, AddProjectForm, AddEmployeeForm, AddResourceForm, AddReviewForm, AddPanelForm
 from django.shortcuts import redirect
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
@@ -71,22 +71,22 @@ def manage_projects(request):
 		return render(request, 'pas/index.html', context)
 
 def manage_hide_finished(request):
-	all_team_list = Team.objects.all()
+	all_project_list = Project.objects.all()
 	finished_list = []
-	for team in all_team_list:
-		if team.project_set.all()[0].percent < 100:
-			finished_list.append(team)
-	context = {'all_team_list': finished_list}
-	return render(request, 'pas/manage.html', context)
+	for project in all_project_list:
+		if project.percent < 100:
+			finished_list.append(project)
+	context = {'project_list': finished_list}
+	return render(request, 'pas/manage-projects.html', context)
 
 def manage_show_overdue(request):
-	all_team_list = Team.objects.all()
+	all_project_list = Project.objects.all()
 	overdue_list = []
-	for team in all_team_list:
-		if (localtime(now()).date() > team.project_set.all()[0].deadline) and (team.project_set.all()[0].percent < 100):
-			overdue_list.append(team)
-	context = {'all_team_list': overdue_list}
-	return render(request, 'pas/manage.html', context)
+	for project in all_project_list:
+		if (localtime(now()).date() > project.deadline) and (project.percent < 100):
+			overdue_list.append(project)
+	context = {'project_list': overdue_list}
+	return render(request, 'pas/manage-projects.html', context)
 
 def team_add(request):
 	if request.user.is_authenticated():
@@ -94,7 +94,7 @@ def team_add(request):
 			form = AddTeamForm(request.POST)
 			if form.is_valid():
 				team = form.save()
-				return redirect('pas:manage')
+				return redirect('pas:manage_groups')
 		else:
 			form = AddTeamForm()
 		return render(request, 'pas/team_add.html', {'form': form})
@@ -111,7 +111,7 @@ def project_add(request):
 			if form.is_valid():
 				project = form.save(commit=False)
 				project.save()
-				return redirect('pas:project_details')
+				return redirect('pas:project_details', project.id)
 		else:
 			form = AddProjectForm()
 		return render(request, 'pas/project_add.html', {'form': form})
@@ -143,7 +143,7 @@ def employee_edit(request, employee_id):
 			form = AddEmployeeForm(request.POST, instance=employee)
 			if form.is_valid():
 				employee = form.save()
-				return redirect('pas:project_details', employee.team_id)
+				return redirect('pas:manage_employees')
 		else:
 			form = AddEmployeeForm(instance=employee)
 		return render(request, 'pas/employee_edit.html', {'form': form})
@@ -186,13 +186,13 @@ def team_edit(request, team_id):
 	
 def team_delete(request, team_id):
     Team.objects.get(pk=team_id).delete()
-    return redirect('pas:manage')
+    return redirect('pas:manage_groups')
 
 def employee_delete(request, employee_id):
 	e = Employee.objects.get(pk=employee_id)
 	team_id = e.team_id
 	e.delete()
-	return redirect('pas:project_details', team_id)
+	return redirect('pas:manage_employees')
 
 def project_delete(request, project_id):
     p = Project.objects.get(pk=project_id)
@@ -200,10 +200,21 @@ def project_delete(request, project_id):
     p.delete()
     return redirect('pas:project_details', team_id)
 
+def panel_delete(request, panel_id):
+    p = Panel.objects.get(pk=panel_id)
+    p.delete()
+    return redirect('pas:manage_groups')
+
+def resource_delete(request, resource_id):
+	r = Resource.objects.get(pk=resource_id)
+	project = r.project
+	r.delete()
+	return redirect('pas:project_details', r.project_id)
+
 def project_details(request, project_id):
 	project = get_object_or_404(Project, pk=project_id)
-	review_list = Review.objects.filter(project=project)
-	resource_list = Resource.objects.all()
+	review_list = Review.objects.filter(project=project).order_by('-review_date')
+	resource_list = Resource.objects.filter(project=project)
 	last = Review().get_last_review(project)
 	today = localtime(now())
 	total = 0
@@ -217,6 +228,13 @@ def team_details(request, team_id):
 	team = get_object_or_404(Team, pk=team_id)
 	context = {'team': team}
 	return render(request, 'pas/team_details.html', context)
+
+
+def employee_details(request, employee_id):
+	employee = get_object_or_404(Employee, pk=employee_id)
+	context = {'employee': employee}
+	return render(request, 'pas/employee_details.html', context)
+
 
 def panel_details(request, panel_id):
 	panel = get_object_or_404(Panel, pk=panel_id)
@@ -233,12 +251,6 @@ def user_logout(request):
 		error = "You do not have permission to access this page. Please log in and try again."
 		context = {'login_error': error}
 		return render(request, 'pas/index.html', context)
-
-def show_employees(request):
-	employees = Employee.objects.all()
-	my_string = "hello this is my string"
-	context = {'employees': employees}
-	return render(request, 'pas/employees.html', context)
 
 def manage_groups(request):
 	if request.user.is_authenticated():
@@ -289,7 +301,13 @@ def review_add(request, project_id):
 				if project_id:
 					review.project_id = project_id
 					review.panel_id = Project.objects.get(pk=project_id).panel_id
-				review.save()
+				try:
+					review.save()
+				except:
+					error = "A panel is not assigned to this project. Assign a proper panel and try again later."
+					form = AddReviewForm()
+					context = {'error': error, 'form':form}
+					return render(request, 'pas/review_add.html', context)
 				if project_id:
 					return redirect('pas:project_details', review.project_id)
 				else:
@@ -302,20 +320,92 @@ def review_add(request, project_id):
 		context = {'login_error': error}
 		return render(request, 'pas/index.html', context)
 
-def panel_add_employee(request, panel_id):
+def panel_edit_employees(request, panel_id):
 	if request.user.is_authenticated():
 		if request.method == 'POST': 
+			current_employee_list = request.POST.getlist('current_employees')
 			employee_list = request.POST.getlist('employees')
+			employee_list += current_employee_list
 			for employee_id in employee_list:
 				e = Employee.objects.get(pk=employee_id)
 				e.panel_id = panel_id
 				e.save()
 			return redirect('pas:panel_details', panel_id)
 		else:
-			employee_list = Employee.objects.filter(panel=None, department=Panel.objects.get(pk=panel_id).department)
-			context = {'employee_list': employee_list} 
-			return render(request, 'pas/panel_add_employee.html', context)
+			all_employee_list = list(Employee.objects.filter(panel=None, department=Panel.objects.get(pk=panel_id).department))
+			current_employee_list = list(Employee.objects.filter(panel=Panel.objects.get(pk=panel_id)))
+			for e in current_employee_list:
+				e.panel = None
+				e.save()
+			context = {'employee_list': all_employee_list, 'current_employee_list': current_employee_list} 
+			return render(request, 'pas/panel_edit_employees.html', context)
 	else:
 		error = "You do not have permission to access this page. Please log in and try again."
 		context = {'login_error': error}
 		return render(request, 'pas/index.html', context)
+
+def team_edit_employees(request, team_id):
+	if request.user.is_authenticated():
+		if request.method == 'POST': 
+			current_employee_list = request.POST.getlist('current_employees')
+			employee_list = request.POST.getlist('employees')
+			employee_list += current_employee_list
+			for employee_id in employee_list:
+				e = Employee.objects.get(pk=employee_id)
+				e.team_id = team_id
+				e.save()
+			return redirect('pas:team_details', team_id)
+		else:
+			all_employee_list = list(Employee.objects.filter(team=None))
+			current_employee_list = list(Employee.objects.filter(team=Team.objects.get(pk=team_id)))
+			for e in current_employee_list:
+				e.team = None
+				e.save()
+			context = {'employee_list': all_employee_list, 'current_employee_list': current_employee_list} 
+			return render(request, 'pas/team_edit_employees.html', context)
+	else:
+		error = "You do not have permission to access this page. Please log in and try again."
+		context = {'login_error': error}
+		return render(request, 'pas/index.html', context)
+
+def panel_edit(request, panel_id):
+	if request.user.is_authenticated():
+		panel = get_object_or_404(Panel, pk=panel_id)
+		if request.method == "POST":
+			form = AddPanelForm(request.POST, instance=panel)
+			if form.is_valid():
+				panel = form.save()
+				return redirect('pas:panel_details', panel.id)
+		else:
+			form = AddPanelForm(instance=panel)
+		return render(request, 'pas/panel_edit.html', {'form': form})
+	else:
+		error = "You do not have permission to access this page. Please log in and try again."
+		context = {'login_error': error}
+		return render(request, 'pas/index.html', context)
+
+def panel_add(request):
+	if request.user.is_authenticated():
+		if request.method == "POST":
+			form = AddPanelForm(request.POST)
+			if form.is_valid():
+				panel = form.save()
+				return redirect('pas:panel_details', panel.id)
+		else:
+			form = AddPanelForm()
+		return render(request, 'pas/panel_add.html', {'form': form})
+	else:
+		error = "You do not have permission to access this page. Please log in and try again."
+		context = {'login_error': error}
+		return render(request, 'pas/index.html', context)
+
+
+def manage_employees(request):
+	if request.user.is_authenticated():
+		employee_list = Employee.objects.all()
+		context = {'employee_list': employee_list}
+		return render(request, 'pas/manage-employees.html', context)
+	else:
+		error = "You do not have permission to access this page. Please log in and try again."
+		context = {'login_error': error}
+		return render(request, 'pas/index.html', context)	

@@ -39,7 +39,7 @@ class Resource(models.Model):
     resource_name = models.CharField(max_length=20)
     amount = models.IntegerField(default=0)
     project = models.ForeignKey(Project, default="")
-    def __str__(self):
+    def __str__(self):  
         return self.resource_name
 
 class Employee(models.Model):
@@ -59,6 +59,7 @@ class Review(models.Model):
     project = models.ForeignKey(Project)
     panel = models.ForeignKey(Panel)
     review_date = models.DateTimeField()
+    subject = models.CharField(max_length=2000, default="Default Topic", null=True, blank=True)
     comments = models.CharField(max_length=2000, default='Default Comment', null=True, blank=True)
     def get_last_review(self, Project):
         try:
@@ -67,4 +68,3 @@ class Review(models.Model):
             pass
     def __str__(self):
         return str(self.project.project_name) + " on " + str(self.review_date)
-

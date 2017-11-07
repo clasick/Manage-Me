@@ -5,18 +5,22 @@
 
 {% block content %}
 <div class="container" style="padding-bottom:15px"> 
-<ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboard">Dashboard</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="/manage-projects/">Manage Projects</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">Manage Groups</a>
-    </li>
-  </ul>
-</div>
+  <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard/">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/manage-projects/">Manage Projects</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/manage-groups/">Manage Groups</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/manage-employees/">Manage Employee</a>
+      </li>
+    </ul>
+  </div>
+
 </br>
 <div class="container" style="padding-bottom:15px">
     <h2 class='bd-title' id='content'>{{ project.project_name }}     <div class="float-right">
@@ -55,7 +59,7 @@
           <div class="card-body">
             <h4 class="card-title">{{ project.team.team_name }}</h4>
             <h6 class="card-subtitle mb-2 text-muted">Assigned Team </h6>
-           <a href="/team/{{ team.id }}/edit/" class="btn btn-secondary" >Show Details</a>
+           <a href="/team/{{ project.team.id }}/details/" class="btn btn-secondary" >Show Details</a>
           </div>
         </div>   
         </div>
@@ -65,7 +69,7 @@
             <div class="card-body">
               <h4 class="card-title">{{ project.panel.panel_name }}</h4>
               <h6 class="card-subtitle mb-2 text-muted">Assigned Panel</h6>
-             <a href="/team/{{ team.id }}/edit/" class="btn btn-secondary" >Show Details</a>
+             <a href="/panel/{{ project.panel.id }}/details/" class="btn btn-secondary" >Show Details</a>
             </div>
           </div> 
           </div>
@@ -148,6 +152,7 @@
                               <th scope="col">#</th>
                               <th scope="col">Resource Name</th>
                               <th scope="col">Amount</th>
+                              <th></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -156,6 +161,7 @@
                               <th scope="row">{{ forloop.counter }} </th>
                               <td>{{ resource.resource_name }}</td>
                               <td>{{ resource.amount }}</td>
+                              <th><a href="/resource/{{ resource.id }}/delete/"> Delete</a></th>
                             </tr>
                             {% endfor %}
                             <th></th>
@@ -170,7 +176,7 @@
               <div class="card">
                   <div class="card-header">
                       <div class="container">
-                          <div class="row">                      
+                            <div class="row">                      
                               <div class="col-lg-6">                          
                             <h4 class="card-title">Review</h4>
                             <h6 class="card-subtitle mb-2 text-muted">Schedule reviews for the project</h6>
@@ -181,14 +187,14 @@
                         </div>
         </div>
                   </div> 
-                    {% if last %}        
+                    {% if last and last.review_date > today %}        
                     <div class="card-body">
                         <div class="card text-white bg-primary">
                             <div class="card-header">Upcoming Review Remainder</div>
                             <div class="card-body">
                        
                               <h4 class="card-title"><b>Next Review on </b> {{ last.review_date }}</h4>
-                              <p class="card-text">{{ last.comments }}</p>
+                              <p class="card-text"><b>Subject</b>: {{ last.subject }}</p>
                              
                               
                             </div>
@@ -212,7 +218,6 @@
 
                           {% endif %}    
                         </br>
-                          <div class="card-group">  
                             {% for review in review_list %}
                               {% if review.review_date < today %}
                               <div class="card">
@@ -223,7 +228,6 @@
                                 <div class="card-footer">
                                   <small class="text-muted">finished {{ review.review_date|naturaltime }}</small>
                                 </div>
-                              </div>
                             {% endif %}
                             {% endfor %}
                             </div>
