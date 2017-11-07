@@ -175,7 +175,7 @@ def team_edit(request, team_id):
 			form = AddTeamForm(request.POST, instance=team)
 			if form.is_valid():
 				team = form.save()
-				return redirect('pas:project_details', team.id)
+				return redirect('pas:team_edit', team.id)
 		else:
 			form = AddTeamForm(instance=team)
 		return render(request, 'pas/team_edit.html', {'form': form})
