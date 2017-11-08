@@ -24,7 +24,7 @@ class Panel(models.Model):
         return self.panel_name
 
 class Project(models.Model):
-    team = models.ForeignKey(Team, null=True, blank=True, on_delete=models.SET_NULL)
+    team = models.OneToOneField(Team, null=True, blank=True, on_delete=models.SET_NULL)
     project_name = models.CharField(max_length=200)
     description = models.CharField(max_length=2000, default="")
     start_date = models.DateField(("Start Date"))
