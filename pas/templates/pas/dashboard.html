@@ -4,14 +4,12 @@
 
 
 {% block content %}
+
 <script>
     window.onload = function() {
     
-    var chart = new CanvasJS.Chart("chartContainer", {
+    var chart1 = new CanvasJS.Chart("schedule_graph", {
       animationEnabled: true,
-      title: {
-        text: "Projects Overview on {{ date }}"
-      },
       data: [{
         type: "pie",
         startAngle: 240,
@@ -24,11 +22,75 @@
         ]
       }]
     });
-    chart.render();
     
+    var chart2 = new CanvasJS.Chart("budget_graph", {
+      animationEnabled: true,
+      data: [{
+        type: "pie",
+        startAngle: 240,
+        yValueFormatString: "##0.00\"%\"",
+        indexLabel: "{label} {y}",
+        dataPoints: [
+          {y: {{ within_budget }}, label: "Within Budget"},
+          {y: {{ over_budget }}, label: "Over Budget"}
+        ]
+      }]
+    });
+    
+
+    var chart3 = new CanvasJS.Chart("review_graph", {
+      animationEnabled: true,
+      data: [{
+        type: "pie",
+        startAngle: 240,
+        yValueFormatString: "##0.00\"%\"",
+        indexLabel: "{label} {y}",
+        dataPoints: [
+          {y: {{ review_upcoming }}, label: "Upcoming Reviews"},
+          {y: {{ review_finished }}, label: "Finished Reviews"},
+        ]
+      }]
+    });
+
+ 
+    var chart4 = new CanvasJS.Chart("department_resource", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	axisY: {
+		title: "Amount (in Rupees)"
+	},
+	data: [{        
+		type: "column",  
+		showInLegend: true, 
+		legendMarkerColor: "grey",
+		legendText: "Rs = one thousand rupees",
+		dataPoints: [      
+			{ y: {{ DEPARTMENT_AMOUNT.Alpha }}, label: "Alpha" },
+      { y: {{ DEPARTMENT_AMOUNT.Beta }}, label: "Beta" },
+      { y: {{ DEPARTMENT_AMOUNT.Charlie }}, label: "Charlie" },
+      { y: {{ DEPARTMENT_AMOUNT.Delta }}, label: "Delta" }
+
+
+
+		]
+	}]
+});
+
+   
+
+      chart1.render()
+      chart2.render()
+      chart3.render()
+      chart4.render()
     }
+
+
+
+
     </script>
 
+ 
+  
 <div class="container" style="padding-bottom:15px"> 
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
@@ -45,8 +107,72 @@
     </li>
   </ul>
 </div>
-  
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+
+<h3>Projects Overview</h3>
+<hr>
+<div class="container">
+
+
+<div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">
+
+              <div id="schedule_graph" style="height: 300px; width: 100%;"></div>
+              
+
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+            <p class="card-text">
+                
+            <div id="budget_graph" style="height: 300px; width: 100%;"></div>
+              </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<hr>
+<div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Review Date Info</h4>              
+            
+          <p class="card-text">
+              <div id="review_graph" style="height: 300px; width: 100%;"></div>
+              
+
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Department Resource Usage</h4>              
+            
+            <p class="card-text">
+                
+            <div id="department_resource" style="height: 300px; width: 100%;"></div>
+              </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+
 
 
 {% endblock %}

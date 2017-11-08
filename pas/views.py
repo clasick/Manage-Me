@@ -42,8 +42,27 @@ def dashboard(request):
 		finished = 0
 		on_schedule = 0 
 		overdue = 0
+		over_budget = 0
+		review_count = 0
+		review_upcoming = 0
+		review_finished = 0
+		DEPARTMENT_AMOUNT = {'Alpha':0, 'Beta': 0, 'Charlie': 0, 'Delta' : 0}
+		for review in Review.objects.all():
+			review_count += 1
+			if review.review_date > localtime(now()):
+				review_upcoming += 1
+			else:
+				review_finished += 1
+		review_upcoming = review_upcoming/review_count * 100;
+		review_finished = review_finished/review_count * 100;
 		for project in Project.objects.all():
 			count += 1
+			resource_amount = 0
+			for resource in Resource.objects.filter(project=project):
+				resource_amount += resource.amount
+				DEPARTMENT_AMOUNT[project.department.department_name] += resource_amount
+			if resource_amount > project.department.project_budget:
+				over_budget += 1
 			if project.percent >= 100:
 				finished += 1
 			elif (localtime(now()).date() > project.deadline) and (project.percent < 100):
@@ -53,7 +72,9 @@ def dashboard(request):
 		finished = finished/count * 100
 		overdue = overdue/count * 100
 		on_schedule = on_schedule/count * 100
-		context = {'all_team_list': all_team_list, 'date': today, 'project_count': count, 'project_finished': finished, 'project_on_schedule': on_schedule, 'project_overdue': overdue}
+		within_budget = (count - over_budget)/count * 100
+		over_budget = over_budget/count * 100
+		context = {'all_team_list': all_team_list, 'date': today, 'project_count': count, 'project_finished': finished, 'project_on_schedule': on_schedule, 'project_overdue': overdue, 'over_budget':over_budget, 'within_budget': within_budget, 'review_upcoming': review_upcoming, 'review_finished':review_finished, 'DEPARTMENT_AMOUNT' : DEPARTMENT_AMOUNT}
 		return render(request, 'pas/dashboard.html', context)
 	else:
 		error = "You do not have permission to access this page. Please log in and try again."
